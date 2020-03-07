@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 
 import * as courseActions from "../../redux/actions/courseActions";
+import * as authorActions from "../../redux/actions/authorActions";
 import CourseList from "./CourseList";
 
 class CoursesPage extends React.Component {
@@ -14,6 +15,9 @@ class CoursesPage extends React.Component {
     this.props.actions.loadCourses().catch(error => {
       alert("Loading courses failed (" + error + ")");
     });
+    this.props.actions.loadAuthors().catch(error => {
+      alert("Loading authors failed (" + error + ")");
+    });
   }
 
   /**
@@ -23,7 +27,10 @@ class CoursesPage extends React.Component {
     return (
       <>
         <h2>Courses</h2>
-        <CourseList courses={this.props.courses}></CourseList>
+        <CourseList
+          courses={this.props.courses}
+          authors={this.props.authors}
+        ></CourseList>
       </>
     );
   }
@@ -31,20 +38,23 @@ class CoursesPage extends React.Component {
 
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
+  authors: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
-  debugger;
   return {
-    courses: state.courses
+    courses: state.courses,
+    authors: state.authors
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  debugger;
   return {
-    actions: bindActionCreators(courseActions, dispatch)
+    actions: bindActionCreators(
+      { ...courseActions, ...authorActions },
+      dispatch
+    )
   };
 };
 
