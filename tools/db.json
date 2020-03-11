@@ -5,7 +5,7 @@
       "title": "Securing React Apps with Auth0",
       "slug": "react-auth0-authentication-security",
       "authorId": 1,
-      "category": "JavaScript"
+      "category": "JavaScript1"
     },
     {
       "id": 2,
@@ -33,14 +33,14 @@
       "title": "Building Applications with React and Redux",
       "slug": "react-redux-react-router-es6",
       "authorId": 1,
-      "category": "JavaScript"
+      "category": "JavaScript1"
     },
     {
       "id": 6,
       "title": "Building Applications in React and Flux",
       "slug": "react-flux-building-applications",
       "authorId": 1,
-      "category": "JavaScript"
+      "category": "JavaScript0"
     },
     {
       "id": 7,
@@ -69,11 +69,36 @@
       "slug": "web-components-shadow-dom",
       "authorId": 1,
       "category": "HTML5"
+    },
+    {
+      "id": 11,
+      "title": "fdsa",
+      "authorId": "2",
+      "category": "fdsa",
+      "createdAt": 1583927404734,
+      "slug": "fdsa"
+    },
+    {
+      "id": 12,
+      "title": "fdsa",
+      "authorId": "3",
+      "category": "fd",
+      "createdAt": 1583928935528,
+      "slug": "fdsa"
     }
   ],
   "authors": [
-    { "id": 1, "name": "Cory House" },
-    { "id": 2, "name": "Scott Allen" },
-    { "id": 3, "name": "Dan Wahlin" }
+    {
+      "id": 1,
+      "name": "Cory House"
+    },
+    {
+      "id": 2,
+      "name": "Scott Allen"
+    },
+    {
+      "id": 3,
+      "name": "Dan Wahlin"
+    }
   ]
 }

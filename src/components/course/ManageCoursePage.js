@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
-import { loadCourses } from "../../redux/actions/courseActions";
+import { saveCourse, loadCourses } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 
 function ManageCoursePage({
@@ -12,6 +12,8 @@ function ManageCoursePage({
   authors,
   loadCourses,
   loadAuthors,
+  saveCourse,
+  history,
   ...props
 }) {
   const [course, setCourse] = useState({ ...props.course });
@@ -22,6 +24,8 @@ function ManageCoursePage({
       loadCourses().catch(error => {
         alert("Loading courses failed (" + error + ")");
       });
+    } else {
+      setCourse({ ...props.course });
     }
 
     if (authors.length == 0) {
@@ -29,13 +33,34 @@ function ManageCoursePage({
         alert("Loading authors failed (" + error + ")");
       });
     }
-  }, []);
+  }, [props.course]);
+
+  /**
+   * Capture form fields changes
+   */
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setCourse(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  /**
+   * Save form
+   */
+  const handleSave = event => {
+    event.preventDefault();
+    saveCourse(course).then(() => history.push("/courses"));
+  };
 
   return (
     <>
       <CourseForm
         course={course}
         authors={authors}
+        onChange={handleChange}
+        onSave={handleSave}
         errors={errors}
       ></CourseForm>
     </>
@@ -47,12 +72,23 @@ ManageCoursePage.propTypes = {
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
-  loadAuthors: PropTypes.func.isRequired
+  loadAuthors: PropTypes.func.isRequired,
+  saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
+const findCourseBySlug = (courses, slug) => {
+  return courses.find(course => (course.slug === slug ? course : null));
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? findCourseBySlug(state.courses, ownProps.match.params.slug)
+      : newCourse;
   return {
-    course: newCourse,
+    course,
     courses: state.courses,
     authors: state.authors
   };
@@ -69,7 +105,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   loadCourses,
-  loadAuthors
+  loadAuthors,
+  saveCourse
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
