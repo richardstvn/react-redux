@@ -42,7 +42,7 @@ function ManageCoursePage({
     const { name, value } = event.target;
     setCourse(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: name === "authorId" ? parseInt(value, 10) : value
     }));
   };
 
