@@ -38,12 +38,14 @@ class CoursesPage extends React.Component {
   render() {
     return (
       <>
-        {this.state.redirectToAddCourse && <Redirect to="/course"></Redirect>}
+        {this.state.redirectToAddCourse && <Redirect to="/course" />}
         <h2>Courses</h2>
         <button
-          style={{ marginBottom: "30px" }}
+          style={{ marginBottom: 20 }}
           className="btn btn-primary add-course"
-          onClick={() => this.setState({ redirectToAddCourse: true })}
+          onClick={() => {
+            this.setState({ redirectToAddCourse: true });
+          }}
         >
           Add Course
         </button>
