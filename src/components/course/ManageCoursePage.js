@@ -53,13 +53,17 @@ function ManageCoursePage({
    * Save form
    */
   const handleSave = event => {
-    debugger;
     event.preventDefault();
     setIsSaving(true);
-    saveCourse(course).then(() => {
-      toast.success("Course saved.");
-      history.push("/courses");
-    });
+    saveCourse(course)
+      .then(() => {
+        toast.success("Course saved.");
+        history.push("/courses");
+      })
+      .catch(error => {
+        setIsSaving(false);
+        setErrors({ onSave: error.message });
+      });
   };
 
   return (
