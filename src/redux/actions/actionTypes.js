@@ -6,3 +6,6 @@ export const UPDATE_COURSE_SUCCESS = "UPDATE_COURSE_SUCCESS";
 
 /* Author actions */
 export const LOAD_AUTHORS_SUCCESS = "LOAD_AUTHORS_SUCCESS";
+
+/* Loading actions */
+export const BEGIN_API_CALL = "BEGIN_API_CALL";
