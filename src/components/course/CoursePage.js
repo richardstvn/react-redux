@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
@@ -34,6 +35,25 @@ class CoursesPage extends React.Component {
   }
 
   /**
+   * Handle delete event
+   */
+  handleDeleteCourse = async course => {
+    const { actions } = this.props;
+
+    toast.success("Delete course: " + course.title + " successfully.");
+    try {
+      await actions.deleteCourse(course);
+    } catch (error) {
+      toast.error(
+        "Delete course failed with error: " + course.title + error.message,
+        {
+          autoClose: false
+        }
+      );
+    }
+  };
+
+  /**
    * UI
    */
   render() {
@@ -56,7 +76,7 @@ class CoursesPage extends React.Component {
             </button>
             <CourseList
               courses={this.props.courses}
-              authors={this.props.authors}
+              onDeleteClick={this.handleDeleteCourse}
             ></CourseList>
           </>
         )}
@@ -94,6 +114,7 @@ const mapDispatchToProps = dispatch => {
   return {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
+      deleteCourse: bindActionCreators(courseActions.deleteCourse, dispatch),
       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch)
     }
   };
